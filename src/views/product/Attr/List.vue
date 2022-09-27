@@ -10,8 +10,7 @@
         <el-button
           type="primary"
           icon="el-icon-plus"
-          @click="showAddDiv"
-          :disabled="!category3Id"
+          @click="showAddDiv"  
           >添加属性</el-button
         >
         <el-table :data="attrList" border style="width: 100%">
@@ -201,7 +200,7 @@ export default {
       const result = await this.$API.attr.getList(
         category1Id,
         category2Id,
-        category3Id
+        category3Id,
       );
       if (result.code === 200 || result.code === 20000) {
         this.attrList = result.data;
@@ -280,6 +279,7 @@ export default {
     },
     // input失去焦点或者回车切换为span 从编辑模式切换为查看模式
     toLook(row) {
+      console.log(this.$refs,row, 'refs')
       // 我们得先判断用户输入的数据合法性
       // 1、如果用户输入的都是空白
       // 2、用户输入的属性值名称和之前的有重复
