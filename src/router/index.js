@@ -46,19 +46,19 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',//重定向二级路由
+    redirect: '/dashboard', // 重定向二级路由
     children: [
       {
         path: 'dashboard',
         name: 'Dashboard',
         component: () => import('@/views/dashboard/index'),
         meta: { title: '首页', icon: 'dashboard' }
-      },
+      }
       // {
       //   path:'',
       //   redirect:'dashboard'
       // }
-  ]
+    ]
   },
   // 商品管理相关的
   // 如果一个路由包含了多个二级路由，那么这个路由的redirect没意义
@@ -67,35 +67,41 @@ export const constantRoutes = [
   // 如果一个路由只包含了一个二级路由，那么这个路由redirect是可以跳转的
   // 但是侧边栏不会出现包含关系
   {
-    path:'/product',
+    path: '/product',
     component: Layout,
-    name:'Product', //name必须写，而且要和这里写的名字一样（后期权限管理要使用）
-    meta: { title: '商品管理', icon: 'el-icon-s-shop' }, //要在侧边栏显示和面包屑显示
+    name: 'Product', // name必须写，而且要和这里写的名字一样（后期权限管理要使用）
+    meta: { title: '商品管理', icon: 'el-icon-s-shop' }, // 要在侧边栏显示和面包屑显示
     // redirect:'/product/trademark/list',
-    children:[
+    children: [
       {
-        path:'trademark/list',
+        path: 'trademark/list',
         component: () => import('@/views/product/Trademark/List'),
-        name:'Trademark',
-        meta: { title: '品牌管理' },
+        name: 'Trademark',
+        meta: { title: '品牌管理' }
       },
       {
-        path:'sku/list',
+        path: 'sku/list',
         component: () => import('@/views/product/Sku/List'),
-        name:'Sku',
-        meta: { title: 'sku管理' },
+        name: 'Sku',
+        meta: { title: 'sku管理' }
       },
       {
-        path:'spu/list',
+        path: 'spu/list',
         component: () => import('@/views/product/Spu/List'),
-        name:'Spu',
-        meta: { title: 'spu管理' },
+        name: 'Spu',
+        meta: { title: 'spu管理' }
       },
       {
-        path:'attr/list',
+        path: 'attr/list',
         component: () => import('@/views/product/Attr/List'),
-        name:'Attr',
-        meta: { title: '平台属性管理' },
+        name: 'Attr',
+        meta: { title: '平台属性管理' }
+      },
+      {
+        path: 'PreviewDrawer/list',
+        component: () => import('@/views/product/PreviewDrawer/List'),
+        name: 'PreviewDrawer',
+        meta: { title: '多draw展示页面' }
       }
     ]
   },

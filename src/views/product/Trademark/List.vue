@@ -1,19 +1,21 @@
 <template>
   <div>
-    <el-button type="primary" icon="el-icon-plus" @click="showAddDialog"
-      >添加</el-button
-    >
+    <el-button
+      type="primary"
+      icon="el-icon-plus"
+      @click="showAddDialog"
+    >添加</el-button>
 
-    <!-- element-ui表格用的很多 
+    <!-- element-ui表格用的很多
     eltable 回车会出现表格自动带一个列
     看我们需要几个列，拷贝几个列-->
 
     <!-- el-table标签里面属性是表格属性，一般用的比较多的
-    设定表格是否有边框   添加border 
+    设定表格是否有边框   添加border
     设定让表格显示的数据  data可以设定表格要展示的数据，数据格式必须是数组-->
 
     <!-- el-table-column标签里面属性是列的属性
-    prop属性代表是显示的数据对象的哪个属性 
+    prop属性代表是显示的数据对象的哪个属性
     labels设定这一列的表头名称用的
     width设定这一列的宽度
     type 设定这列的类型  type=index 代表是序号列，序号会自动填上
@@ -21,21 +23,19 @@
     -->
 
     <!-- table展示动态数据依赖的就是data属性，这个数据必须是数组
-    当我们data有数据的时候，那么会默认把data的数据分别给每个列都传递一份 
+    当我们data有数据的时候，那么会默认把data的数据分别给每个列都传递一份
     每个列组件内部是在展示我们的列表，说白了就是vfor，至于说展示的是这个列表当中对象的哪个属性
     我们需要自己通过prop指定
     内部只是展示我们的数据，而如果这个数据是需要额外的结构，那么内部说了不算，又外部（父组件）说了算
     -->
     <el-table :data="trademarkList" border style="width: 100%; margin: 20px 0">
-      <el-table-column align="center" type="index" label="序号" width="80">
-      </el-table-column>
-      <el-table-column prop="tmName" label="品牌名称" width="width">
-      </el-table-column>
+      <el-table-column align="center" type="index" label="序号" width="80" />
+      <el-table-column prop="tmName" label="品牌名称" width="width" />
       <el-table-column prop="logoUrl" label="品牌LOGO" width="width">
         <!-- row代表的就是当前遍历的这一项，如果你不知道row是谁，就看data是哪个数组 -->
         <!-- data里面的某一项就是这个row -->
         <template slot-scope="{ row, $index }">
-          <img :src="row.logoUrl" alt="" style="width: 80px; height: 60px" />
+          <img :src="row.logoUrl" alt="" style="width: 80px; height: 60px">
         </template>
       </el-table-column>
       <el-table-column prop="prop" label="操作" width="width">
@@ -45,15 +45,13 @@
             icon="el-icon-edit"
             size="mini"
             @click="showUpdateDialog(row)"
-            >修改</el-button
-          >
+          >修改</el-button>
           <el-button
             type="danger"
             icon="el-icon-delete"
             size="mini"
             @click="deleteTrademark(row)"
-            >删除</el-button
-          >
+          >删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -68,16 +66,15 @@
     <!--  @size-change="handleSizeChange" 改变每页显示数量的时候的事件 -->
     <el-pagination
       style="text-align: center"
-      @current-change="getTrademarkList"
-      @size-change="handleSizeChange"
       :current-page="page"
       :total="total"
       :page-size="limit"
       :pager-count="7"
       :page-sizes="[3, 5, 10]"
       layout="prev, pager, next, jumper,->,sizes,total"
-    >
-    </el-pagination>
+      @current-change="getTrademarkList"
+      @size-change="handleSizeChange"
+    />
 
     <!-- 添加和修改使用的dialog -->
     <!-- form和table是以后我们用的最频繁的两个组件，一个用来收集数据，一个用来展示数据
@@ -86,9 +83,9 @@
       :title="tmForm.id ? '修改品牌' : '添加品牌'"
       :visible.sync="dialogFormVisible"
     >
-      <el-form style="width: 80%" :model="tmForm" :rules="rules" ref="tmForm">
+      <el-form ref="tmForm" style="width: 80%" :model="tmForm" :rules="rules">
         <el-form-item label="品牌名称" label-width="100px" prop="tmName">
-          <el-input v-model="tmForm.tmName" autocomplete="off"></el-input>
+          <el-input v-model="tmForm.tmName" autocomplete="off" />
         </el-form-item>
 
         <el-form-item label="品牌LOGO" label-width="100px" prop="logoUrl">
@@ -101,9 +98,9 @@
             :before-upload="beforeAvatarUpload"
           >
             <!-- 下面的这个img是在做上传成功后，图片的预览 -->
-            <img v-if="tmForm.logoUrl" :src="tmForm.logoUrl" class="avatar" />
-            <i v-else class="el-icon-plus avatar-uploader-icon"></i>
-            <div class="el-upload__tip" slot="tip">
+            <img v-if="tmForm.logoUrl" :src="tmForm.logoUrl" class="avatar">
+            <i v-else class="el-icon-plus avatar-uploader-icon" />
+            <div slot="tip" class="el-upload__tip">
               只能上传jpg文件，且不超过2M
             </div>
           </el-upload>
@@ -111,9 +108,10 @@
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取 消</el-button>
-        <el-button type="primary" @click="addOrUpdateTrademark"
-          >确 定</el-button
-        >
+        <el-button
+          type="primary"
+          @click="addOrUpdateTrademark"
+        >确 定</el-button>
       </div>
     </el-dialog>
   </div>
@@ -121,28 +119,28 @@
 
 <script>
 export default {
-  name: "Trademark",
+  name: 'Trademark',
   data() {
     var validateTmName = (rule, value, callback) => {
-      if(value.length < 2 || value.length > 10){
-        callback(new Error('品牌名称必须是2-10位')) //验证失败
-      }else{
-        callback() //验证通过
+      if (value.length < 2 || value.length > 10) {
+        callback(new Error('品牌名称必须是2-10位')) // 验证失败
+      } else {
+        callback() // 验证通过
       }
-    };
+    }
     return {
       page: 1,
       limit: 3,
       trademarkList: [],
       total: 0,
 
-      dialogFormVisible: false, //控制dialog的显示和隐藏
+      dialogFormVisible: false, // 控制dialog的显示和隐藏
 
       // imageUrl: "", //upload里面自带的一个动态数据，后期不用可以删除
       tmForm: {
         // 指定的要收集数据收集的位置，这里面有什么属性，从接口文档去看
-        logoUrl: "",
-        tmName: "",
+        logoUrl: '',
+        tmName: ''
       },
       // 表单验证的规则
       // 表单验证的规则是一个对象
@@ -153,7 +151,7 @@ export default {
       rules: {
         tmName: [
           // 内置规则
-          { required: true, message: "请输入品牌名称", trigger: "blur" },
+          { required: true, message: '请输入品牌名称', trigger: 'blur' },
           // {
           //   min: 2,
           //   max: 10,
@@ -161,81 +159,81 @@ export default {
           //   trigger: "change",
           // },
           // 自定义规则验证品牌名称的长度
-          { validator: validateTmName, trigger: "change" },
+          { validator: validateTmName, trigger: 'change' }
         ],
 
-        logoUrl: [{ required: true, message: "请选择品牌LOGO" }],
-      },
-    };
+        logoUrl: [{ required: true, message: '请选择品牌LOGO' }]
+      }
+    }
   },
   mounted() {
-    this.getTrademarkList();
+    this.getTrademarkList()
   },
   methods: {
     // 请求获取品牌列表数据
     async getTrademarkList(page = 1) {
-      this.page = page;
+      this.page = page
       const result = await this.$API.trademark.getPageList(
         this.page,
         this.limit
-      );
+      )
       if (result.code === 20000 || result.code === 200) {
         // console.log(result.data)
-        this.trademarkList = result.data.records;
-        this.total = result.data.total;
+        this.trademarkList = result.data.records
+        this.total = result.data.total
       }
     },
     // 修改每页的显式数量
     handleSizeChange(size) {
-      this.limit = size;
-      this.getTrademarkList();
+      this.limit = size
+      this.getTrademarkList()
     },
 
     // upload上传成功，上传成功的时候会调这个函数，在这个函数里面我们要赶紧收集图片路径
     handleAvatarSuccess(res, file) {
       // this.imageUrl = URL.createObjectURL(file.raw);
       // console.log(this.imageUrl)
-      //blob:http://localhost:9528/d17bbda6-11bb-4cae-94a7-2d12ae5242a0
+      // blob:http://localhost:9528/d17bbda6-11bb-4cae-94a7-2d12ae5242a0
       // 上面这样的方式是不对的，因为获取的是本地的图片路径，我们不需要本地的图片路径
       // 而是需要拿到上传成功后，后台返回给我们的真实的服务器网络路径
       // console.log(res,file)
       // 收集真实的服务器图片路径
-      this.tmForm.logoUrl = res.data || file.response.data;
+      this.tmForm.logoUrl = res.data || file.response.data
     },
     // 代表上传前，对上传的文件进行格式和大小的限制,不需要我们操作，看懂即可
     beforeAvatarUpload(file) {
-      const isJPG = file.type === "image/jpeg";
-      const isLt2M = file.size / 1024 / 1024 < 2;
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 2
 
       if (!isJPG) {
-        this.$message.error("上传头像图片只能是 JPG 格式!");
+        this.$message.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error("上传头像图片大小不能超过 2MB!");
+        this.$message.error('上传头像图片大小不能超过 2MB!')
       }
-      return isJPG && isLt2M;
+      return isJPG && isLt2M
     },
     // 点击列表页添加按钮，显示添加的dialog
     showAddDialog() {
-      this.dialogFormVisible = true;
+      this.dialogFormVisible = true
       // 点击添加的时候弹出dialog，还要去清空dialog内部的数据
       // 否则这个用户添加完成点取消再次点击添加，以前的数据还在
       this.tmForm = {
-        logoUrl: "",
-        tmName: "",
-      };
+        logoUrl: '',
+        tmName: ''
+      }
     },
     // 点击修改按钮，显示修改的dialog（其实和添加是同一个）
     // 添加的时候我们tmForm对象和修改的时候不是同一个对象
     // 添加的时候我们用的是上面data当中自己定义的对象里面有logoUrl和tmName
     // 修改的时候我们用的是列表页当中已经获取到的品牌对象，里面有id  logoUrl  tmName
     showUpdateDialog(row) {
-      this.dialogFormVisible = true;
+      this.dialogFormVisible = true
       // this.tmForm = row  //row里面本来就有id  logoUrl  tmName
       // 如果这样写，那么tmForm和列表页当中显示的就是同一个对象
       // 我们在tmForm当中修改了数据，外部列表页也会跟着同时修改
       // 此时我们需要让他们不是同一个对象，但是内部东西是一样的
-      this.tmForm = { ...row };
+      this.tmForm = { ...row }
 
       // 要想明白深浅拷贝，必须先明白拷贝
       // 拷贝：数据必须出现一个新的内存，才叫拷贝
@@ -281,77 +279,77 @@ export default {
     // 点击dialog的确定按钮，发请求添加或者修改
     addOrUpdateTrademark() {
       // 对表单进行整体验证
-      this.$refs.tmForm.validate(async (valid) => {
+      this.$refs.tmForm.validate(async(valid) => {
         if (valid) {
           // 1、获取请求参数
-          let trademark = this.tmForm;
+          const trademark = this.tmForm
           // 2、整理参数,如果参数是正确的就不需要整理了，如果参数有问题才需要整理
           // 3、发请求
           try {
             // 4、请求成功干啥
-            const result = await this.$API.trademark.addOrUpdate(trademark);
+            const result = await this.$API.trademark.addOrUpdate(trademark)
             if (result.code === 200 || result.code === 20000) {
               // 提示
               this.$message.success(
-                trademark.id ? "修改品牌成功" : "添加品牌成功"
-              );
+                trademark.id ? '修改品牌成功' : '添加品牌成功'
+              )
               // 关闭dialog，回到列表页
-              this.dialogFormVisible = false;
+              this.dialogFormVisible = false
               // 回到列表页面，重新请求获取列表页的数据
               // 请求列表页数据的时候，添加和修改请求的数据页码不同
               // 添加我们直接拿第一页就行，而修改我们要获取的是修改数据当前所在页
-              this.getTrademarkList(trademark.id ? this.page : 1);
+              this.getTrademarkList(trademark.id ? this.page : 1)
             } else {
               this.$message.error(
-                trademark.id ? "修改品牌失败" : "添加品牌失败"
-              );
+                trademark.id ? '修改品牌失败' : '添加品牌失败'
+              )
             }
           } catch (error) {
             // 5、请求失败干啥
-            this.$message.error("请求失败");
+            this.$message.error('请求失败')
           }
         } else {
-          this.$message.error("表单验证不合法");
-          return false;
+          this.$message.error('表单验证不合法')
+          return false
         }
-      });
+      })
     },
     // 点击列表页删除按钮，请求删除品牌
     deleteTrademark(row) {
       // 点击删除先弹出messageBox提示
-      this.$confirm(`你确定要删除${row.tmName}吗？`, "提示", {
-        confirmButtonText: "确定",
-        cancelButtonText: "取消",
-        type: "warning",
+      this.$confirm(`你确定要删除${row.tmName}吗？`, '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-        .then(async () => {
+        .then(async() => {
           // 用户点击确定的时候，要发请求
           try {
-            const result = await this.$API.trademark.delete(row.id);
+            const result = await this.$API.trademark.delete(row.id)
             if (result.code === 200 || result.code === 20000) {
               // 提示
-              this.$message.success("删除品牌成功");
+              this.$message.success('删除品牌成功')
               // 重新获取列表数据
               // 删除哪一页的数据重新还是在哪一页，除非是最后一页，而且只有一条，删除之后回到前一页
               this.getTrademarkList(
                 this.trademarkList.length > 1 ? this.page : this.page - 1
-              );
+              )
             } else {
-              this.$message.error("删除品牌失败");
+              this.$message.error('删除品牌失败')
             }
           } catch (error) {
-            this.$message.error("请求失败");
+            this.$message.error('请求失败')
           }
         })
         .catch(() => {
           this.$message({
-            type: "info",
-            message: "已取消删除",
-          });
-        });
-    },
-  },
-};
+            type: 'info',
+            message: '已取消删除'
+          })
+        })
+    }
+  }
+}
 </script>
 
 <style>
