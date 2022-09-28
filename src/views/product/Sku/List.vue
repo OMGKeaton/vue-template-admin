@@ -48,7 +48,7 @@
         </el-table>
       </div>
     </el-card>
-    <el-card v-show="!isShowList" style="margin-top:20px">
+    <el-card v-show="!isShowList" style="margin-top:21px">
       <el-tabs v-model="activeName" type="card" @tab-click="handleClick">
         <el-tab-pane label="用户管理" name="first">
           <el-form :inline="true" :modele="attrFrom">
